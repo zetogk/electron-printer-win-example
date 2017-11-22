@@ -1,0 +1,21 @@
+{
+  "name": "house-printing-example-electron",
+  "version": "1.0.0",
+  "description": "Example of a minimal Electron app that allows to print with printer package",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "",
+  "keywords": [
+    "Electron",
+    "printer",
+    "Windows",
+    "example",
+    "demo"
+  ],
+  "author": "zetogk",
+  "devDependencies": {
+    "electron": "~1.7.8"
+  }
+}

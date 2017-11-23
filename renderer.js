@@ -3,11 +3,11 @@ const printer = require('printer');
 const util = require('util');
 const os = require('os');
 
-const printFromText = (printer, text) => {
+const printFromText = (selectedPrinter, text) => {
 
   printer.printDirect({
     data: text,
-    printer: pritner,
+    printer: selectedPrinter,
     type: 'RAW',
     success: (jobID) => {
       operationLog.append(`ID: ${jobID} Printing in ${selectedPrinter} \n`);
@@ -19,11 +19,11 @@ const printFromText = (printer, text) => {
 
 };
 
-const printFromFile = (printer, file) => {
+const printFromFile = (selectedPrinter, file) => {
 
   printer.printFile({
     filename: file,
-    printer: printer,
+    printer: selectedPrinter,
     success: function (jobID) {
       operationLog.append(`ID: ${jobID} Printing in ${selectedPrinter} \n`);
     },
@@ -37,8 +37,8 @@ const printFromFile = (printer, file) => {
 const printers = printer.getPrinters();
 for (let i = 0; i < printers.length; i++) {
 
-  let printer = printers[i];
-  document.getElementById('selectPrinter').innerHTML += `<option value="${printer.name}">${printer.name}</option>`;
+  let p = printers[i];
+  document.getElementById('selectPrinter').innerHTML += `<option value="${p.name}">${p.name}</option>`;
 
 }
 
@@ -55,7 +55,7 @@ btnInfo.addEventListener('click', () => {
 
 });
 
-btnPrint.addEventListener('click', function () {
+btnPrint.addEventListener('click', () => {
 
   const platform = os.platform();
   const selectedPrinter = document.getElementById('selectPrinter').value;

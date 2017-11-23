@@ -4,7 +4,8 @@
   "description": "Example of a minimal Electron app that allows to print with printer package",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist-mac": "electron-builder --mac"
   },
   "repository": "",
   "keywords": [
@@ -17,6 +18,7 @@
   "author": "zetogk",
   "devDependencies": {
     "electron": "~1.7.8",
+    "electron-builder": "^19.46.4",
     "electron-rebuild": "^1.6.0"
   },
   "dependencies": {

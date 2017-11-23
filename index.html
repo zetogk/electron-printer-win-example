@@ -3,13 +3,33 @@
   <head>
     <meta charset="UTF-8">
     <title>Printer</title>
+
+    <style>
+      * {
+        font-family: monospace;
+      }
+
+      h1 {
+        text-align:center;
+      }
+
+      .input-form {
+        display: block;
+        margin: 0 auto 1em;
+        width: 90%;
+      }
+    </style>
+
   </head>
   <body>
 
     <h1>Printing house</h1>
-    <h3>What do you want to print?</h3>
-    <textarea name="textareaContent" id="textareaContent"></textarea><br>
-    <button name="btnPrint" id="btnPrint">Print now!</button>
+    <select class="input-form" id="selectPrinter">
+      <option value="select-a-printer">Select a printer</option>
+    </select>
+    <textarea class="input-form" id="textareaContent"></textarea>
+    <button class="input-form" id="btnPrint">Print now!</button>
+    <button class="input-form" id="btnInfo">Get info!</button>
 
     <script>
       require('./renderer.js')

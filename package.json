@@ -16,6 +16,12 @@
   ],
   "author": "zetogk",
   "devDependencies": {
-    "electron": "~1.7.8"
+    "electron": "~1.7.8",
+    "electron-rebuild": "^1.6.0"
+  },
+  "dependencies": {
+    "asar": "^0.14.0",
+    "printer": "^0.2.2",
+    "util": "^0.10.3"
   }
 }

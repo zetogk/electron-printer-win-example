@@ -24,12 +24,21 @@
   <body>
 
     <h1>Printing house</h1>
+    <select class="input-form" id="selectTypePrinting">
+      <option value="text" slected>Print from text</option>
+      <option value="text" slected>Print from file (Not yet supported for Win)</option>
+    </select>
     <select class="input-form" id="selectPrinter">
       <option value="select-a-printer">Select a printer</option>
     </select>
-    <textarea class="input-form" id="textareaContent"></textarea>
-    <button class="input-form" id="btnPrint">Print now!</button>
+    <input class="input-form" type="text" id="inputFilePath" placeholder="Path of file">
+    <textarea class="input-form" id="textareaContent">Text</textarea>
+    <button class="input-form" id="btnPrintWin">Print in Win!</button>
+    <button class="input-form" id="btnPrintMac">Print in Mac!</button>
     <button class="input-form" id="btnInfo">Get info!</button>
+
+    <h4>Log</h4>
+    <textarea class="input-form" id="operationLog" rows="10"></textarea>
 
     <script>
       require('./renderer.js')

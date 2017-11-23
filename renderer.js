@@ -10,7 +10,7 @@ const printFromText = (printer, text) => {
     printer: pritner,
     type: 'RAW',
     success: (jobID) => {
-      operationLog.append('Printing in '+ selectedPrinter +' \n');
+      operationLog.append(`ID: ${jobID} Printing in ${selectedPrinter} \n`);
     },
     error: (err) => {
       operationLog.append('There was an error to complete the operation \n');
@@ -25,7 +25,7 @@ const printFromFile = (printer, file) => {
     filename: file,
     printer: printer,
     success: function (jobID) {
-      operationLog.append('Printing in '+ selectedPrinter +' \n');
+      operationLog.append(`ID: ${jobID} Printing in ${selectedPrinter} \n`);
     },
     error: function (err) {
       operationLog.append('There was an error to complete the operation \n');
@@ -38,12 +38,11 @@ const printers = printer.getPrinters();
 for (let i = 0; i < printers.length; i++) {
 
   let printer = printers[i];
-  document.getElementById('selectPrinter').innerHTML += '<option value="' + printer.name + '">' + printer.name + '</option>'
+  document.getElementById('selectPrinter').innerHTML += `<option value="${printer.name}">${printer.name}</option>`;
 
 }
 
-btnPrintWin = document.getElementById('btnPrintWin');
-btnPrintMac = document.getElementById('btnPrintMac');
+btnPrint = document.getElementById('btnPrint');
 btnInfo = document.getElementById('btnInfo');
 ulLog = document.getElementById('operationLog');
 
@@ -56,53 +55,36 @@ btnInfo.addEventListener('click', () => {
 
 });
 
+btnPrint.addEventListener('click', function () {
 
-btnPrintWin.addEventListener('click', function () {
-
-  var text = document.getElementById('textareaContent').value;
-  var selectedPrinter = document.getElementById('selectPrinter').value;
-  var typePrinting = document.getElementById('selectTypePrinting').value;
+  const platform = os.platform();
+  const selectedPrinter = document.getElementById('selectPrinter').value;
+  const typePrinting = document.getElementById('selectTypePrinting').value;
 
   if (selectedPrinter === 'select-a-printer') {
 
-    operationLog.append('Your should select a printer \n');
-
-  } else {
-
-    if (typePrinting === 'text') {
-
-      printFromText(selectedPrinter, text);
-
-    } else {
-
-      operationLog.append('Your should select a printer \n');
-      alert('Is not possible print from files to Windows');
-
-    }
+    operationLog.append('WARNING: Your should select a printer \n');
+    return;
 
   }
 
-});
+  if (typePrinting === 'text') {
 
-btnPrintMac.addEventListener('click', function () {
+    const text = document.getElementById('textareaContent').value;
+    printFromText(selectedPrinter, text);
 
-  var text = document.getElementById('textareaContent').value;
-  var typePrinting = document.getElementById('selectTypePrinting').value;
-  var selectedPrinter = document.getElementById('selectPrinter').value;
-  var filePath = document.getElementById('inputFilePath').value;
+  }
 
-  if (selectedPrinter === 'select-a-printer') {
+  if (typePrinting === 'file') {
 
-    operationLog.append('Your should select a printer \n');
+    if (platform === 'win32') {
 
-  } else {
-
-    if (typePrinting === 'text') {
-
-      printFromText(selectedPrinter, text);
+      operationLog.append('WARNING: Is not possible print files from Windows :( \n');
+      return;
 
     } else {
 
+      const filePath = document.getElementById('inputFilePath').value;
       printFromFile(selectedPrinter, filePath);
 
     }

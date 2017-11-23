@@ -3,6 +3,37 @@ const printer = require('printer');
 const util = require('util');
 const os = require('os');
 
+const printFromText = (printer, text) => {
+
+  printer.printDirect({
+    data: text,
+    printer: pritner,
+    type: 'RAW',
+    success: (jobID) => {
+      operationLog.append('Printing in '+ selectedPrinter +' \n');
+    },
+    error: (err) => {
+      operationLog.append('There was an error to complete the operation \n');
+    }
+  });
+
+};
+
+const printFromFile = (printer, file) => {
+
+  printer.printFile({
+    filename: file,
+    printer: printer,
+    success: function (jobID) {
+      operationLog.append('Printing in '+ selectedPrinter +' \n');
+    },
+    error: function (err) {
+      operationLog.append('There was an error to complete the operation \n');
+    }
+  });
+
+};
+
 const printers = printer.getPrinters();
 for (let i = 0; i < printers.length; i++) {
 
@@ -34,31 +65,17 @@ btnPrintWin.addEventListener('click', function () {
 
   if (selectedPrinter === 'select-a-printer') {
 
-    //alert('You should select a printer');
     operationLog.append('Your should select a printer \n');
 
   } else {
 
     if (typePrinting === 'text') {
 
-      printer.printDirect({
-        data: text,
-        printer: selectedPrinter,
-        type: 'RAW',
-        success: function (jobID) {
-          operationLog.append('Printing in '+ selectedPrinter +' \n');
-          /* console.log("sent to printer with ID: " + jobID);
-          alert('Printing'); */
-        },
-        error: function (err) {
-          console.log(err);
-          //alert('There was an error to complete the operation');
-          operationLog.append('There was an error to complete the operation \n');
-        }
-      });
+      printFromText(selectedPrinter, text);
 
     } else {
 
+      operationLog.append('Your should select a printer \n');
       alert('Is not possible print from files to Windows');
 
     }
@@ -76,44 +93,17 @@ btnPrintMac.addEventListener('click', function () {
 
   if (selectedPrinter === 'select-a-printer') {
 
-    //alert('You should select a printer');
     operationLog.append('Your should select a printer \n');
 
   } else {
 
     if (typePrinting === 'text') {
 
-      printer.printDirect({
-        data: text,
-        printer: selectedPrinter,
-        type: 'RAW',
-        success: function (jobID) {
-          operationLog.append('Printing in '+ selectedPrinter +' \n');
-          /* console.log("sent to printer with ID: " + jobID);
-          alert('Printing'); */
-        },
-        error: function (err) {
-          console.log(err);
-          //alert('There was an error to complete the operation');
-          operationLog.append('There was an error to complete the operation \n');
-        }
-      });
+      printFromText(selectedPrinter, text);
 
     } else {
 
-      printer.printFile({
-        filename: filePath,
-        printer: selectedPrinter,
-        success: function (jobID) {
-          operationLog.append('Printing in '+ selectedPrinter +' \n');
-          /* console.log("sent to printer with ID: " + jobID);
-          alert('Printing'); */
-        },
-        error: function (err) {
-          //alert('There was an error to complete the operation');
-          operationLog.append('There was an error to complete the operation \n');
-        }
-      });
+      printFromFile(selectedPrinter, filePath);
 
     }
 

@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "asar": "^0.14.0",
+    "electron-pdf": "^1.2.2",
     "printer": "^0.2.2",
     "util": "^0.10.3"
   }

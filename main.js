@@ -6,6 +6,11 @@ const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+const ElectronPDF = require('electron-pdf');
+const jobOptions = { inMemory: true, closeWindow: false };
+const options = { pageSize : "A4" };
+const exporter = new ElectronPDF();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,9 +26,10 @@ function createWindow() {
     protocol: 'file:',
     slashes: true
   }))
+/*   mainWindow.loadURL('http://github.com'); */
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -32,6 +38,36 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+/*   mainWindow.webContents.printToPDF({}, (error, data) => {
+    console.log(data);
+    if (error) throw error
+    fs.writeFile('./print.pdf', data, (error) => {
+      if (error) throw error
+      console.log('Write PDF successfully.')
+    })
+  }) */
+ 
+  mainWindow.webContents.on('did-finish-load', () => {
+    // Use default printing options
+    mainWindow.webContents.printToPDF({}, (error, data) => {
+      if (error) throw error
+      fs.writeFile('./print.pdf', data, (error) => {
+        if (error) throw error
+        console.log('Write PDF successfully.')
+      })
+    })
+  })
+
+
+/*   exporter.createJob('./index.html', 'printing.pdf', options, jobOptions).then( job => {
+      job.on('job-complete', (r) => {
+        //Send the Buffer here
+        //process.nextTick(() => {job.destroy()})
+        job.destroy();
+      })
+  }); */
+
 }
 
 // This method will be called when Electron has finished

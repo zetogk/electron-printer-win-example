@@ -2,6 +2,7 @@
 const printer = require('printer');
 const util = require('util');
 const os = require('os');
+const fs = require('fs');
 
 const printers = printer.getPrinters();
 for (let i = 0; i < printers.length; i++) {
@@ -26,8 +27,8 @@ btnInfo.addEventListener('click', () => {
 
 btnPrint.addEventListener('click', function () {
 
-  var text = document.getElementById('textareaContent').value;
-  var selectedPrinter = document.getElementById('selectPrinter').value;
+  let text = document.getElementById('textareaContent').value;
+  let selectedPrinter = document.getElementById('selectPrinter').value;
 
   if (selectedPrinter === 'select-a-printer') {
 
@@ -35,20 +36,18 @@ btnPrint.addEventListener('click', function () {
 
   } else {
 
-    alert('The next text will be printed by ' + selectedPrinter);
-    alert(text);
+    const dataEmf = fs.readFileSync('./print.emf');
+    
+    console.log(dataEmf);
 
     printer.printDirect({
-      data: text,
-      printer: selectedPrinter,
-      type: 'RAW',
-      success: function (jobID) {
-        console.log("sent to printer with ID: " + jobID);
-        alert('Printing');
+      data: dataEmf,
+      type: 'EMF',
+      success: function(id) {
+          console.log('printed with id ' + id);
       },
-      error: function (err) {
-        console.log(err);
-        alert('There was an error to complete the operation');
+      error: function(err) {
+          console.error('error on printing: ' + err);
       }
     });
 
